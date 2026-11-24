@@ -1,10 +1,15 @@
 package calculadorav1.vista;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
-
+import java.awt.Color;
 public class CalculadoraV1
 {
+    // Boolean modo claro/oscuro
+    private boolean modoOscuro = false;
+
     // Panel
     private JPanel pnlCalculadora;
 
@@ -36,6 +41,8 @@ public class CalculadoraV1
     private JButton btnPorcentaje;
     private JButton btnComa;
     private JButton btnCalculadora;
+    private JButton btnHistorial;
+    private JButton btnEstilos;
 
     private void createUIComponents()
     {
@@ -61,6 +68,9 @@ public class CalculadoraV1
         btnPorcentaje = new BotonRedondeado(25);
         btnComa = new BotonRedondeado(25);
         btnCalculadora = new BotonRedondeado(25);
+
+        btnEstilos = new BotonRedondeado(25);
+        btnHistorial = new BotonRedondeado(25);
     }
 
     public class BotonRedondeado extends JButton
@@ -119,15 +129,135 @@ public class CalculadoraV1
     }
     public CalculadoraV1(){
         txtOperacion.setBorder(null);
-
+        txtOperacion.setEditable(false);
+        txtOperacion.setFocusable(false);
         // Listeners
+
+        btnEstilos.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                modoOscuro = !modoOscuro;
+                if  (modoOscuro) {
+                    // Definición de colores Modo Claro
+                    Color colorFondoPanel = new Color(242, 242, 247);
+
+                    Color colorFondoNumerosPantalla = new Color(242,242,247);
+                    Color colorLetraNumerosPantalla = new Color(28,28,30);
+
+                    Color colorFondoNumerosBoton = new Color(254,254,254);
+                    Color colorLetraNumerosBoton = new Color(28,28,30);
+
+                    Color colorFondoFuncionesSuperiores = new Color(209,209,214);
+                    Color colorLetraFuncionesSuperiores = new Color(28,28,30);
+
+                    Color colorFondoOperadores = new Color(254,149,0);
+                    Color colorLetraOperadores = new Color(254,254,254);
+
+                    Color colorFondoBotonesSuperiores = new Color(44,44,46);
+                    Color colorLetraBotonesSuperiores = new Color(254,254,254);
+
+                    // Asignación de colores
+                    pnlCalculadora.setBackground(colorFondoPanel);
+
+                    txtOperacion.setBackground(colorFondoNumerosPantalla);
+                    txtOperacion.setForeground(colorLetraNumerosPantalla);
+
+                    JButton[] botonesNumeros = {
+                            btnCero, btnUno, btnDos, btnTres, btnCuatro,
+                            btnCinco, btnSeis, btnSiete, btnOcho, btnNueve,
+                            btnComa, btnCalculadora
+                    };
+                    for (JButton btn : botonesNumeros) {
+                        btn.setBackground(colorFondoNumerosBoton);
+                        btn.setForeground(colorLetraNumerosBoton);
+                    }
+
+                    JButton[] botonesFunciones = { btnAC, btnMasMenos, btnPorcentaje };
+                    for (JButton btn : botonesFunciones) {
+                        btn.setBackground(colorFondoFuncionesSuperiores);
+                        btn.setForeground(colorLetraFuncionesSuperiores);
+                    }
+
+                    JButton[] botonesOperadores = {
+                            btnSuma, btnResta, btnMultiplicacion, btnDivision, btnIgual
+                    };
+                    for (JButton btn : botonesOperadores) {
+                        btn.setBackground(colorFondoOperadores);
+                        btn.setForeground(colorLetraOperadores);
+                    }
+
+                    JButton[] botonesSuperiores = { btnHistorial, btnEstilos };
+                    for (JButton btn : botonesSuperiores) {
+                        btn.setBackground(colorFondoBotonesSuperiores);
+                        btn.setForeground(colorLetraBotonesSuperiores);
+                    }
+                }
+                else {
+                    // Definición de colores Modo Oscuro
+                    Color colorFondoPanel = new Color(28, 28, 30);
+
+                    Color colorFondoNumerosPantalla = new Color(28, 28, 30);
+                    Color colorLetraNumerosPantalla = new Color(254, 254, 254);
+
+                    Color colorFondoNumerosBoton = new Color(58, 58, 60);
+                    Color colorLetraNumerosBoton = new Color(254, 254, 254);
+
+                    Color colorFondoFuncionesSuperiores = new Color(0, 0, 0);
+                    Color colorLetraFuncionesSuperiores = new Color(254, 254, 254);
+
+                    Color colorFondoOperadores = new Color(255, 149, 0);
+                    Color colorLetraOperadores = new Color(255, 255, 255);
+
+                    Color colorFondoBotonesSuperiores = new Color(51, 51, 51);
+                    Color colorLetraBotonesSuperiores = new Color(0, 0, 0);
+
+                    // Asignación de colores
+                    pnlCalculadora.setBackground(colorFondoPanel);
+
+                    txtOperacion.setBackground(colorFondoNumerosPantalla);
+                    txtOperacion.setForeground(colorLetraNumerosPantalla);
+
+                    JButton[] botonesNumeros = {
+                            btnCero, btnUno, btnDos, btnTres, btnCuatro,
+                            btnCinco, btnSeis, btnSiete, btnOcho, btnNueve,
+                            btnComa, btnCalculadora
+                    };
+                    for (JButton btn : botonesNumeros) {
+                        btn.setBackground(colorFondoNumerosBoton);
+                        btn.setForeground(colorLetraNumerosBoton);
+                    }
+
+                    JButton[] botonesFunciones = { btnAC, btnMasMenos, btnPorcentaje };
+                    for (JButton btn : botonesFunciones) {
+                        btn.setBackground(colorFondoFuncionesSuperiores);
+                        btn.setForeground(colorLetraFuncionesSuperiores);
+                    }
+
+                    JButton[] botonesOperadores = {
+                            btnSuma, btnResta, btnMultiplicacion, btnDivision, btnIgual
+                    };
+                    for (JButton btn : botonesOperadores) {
+                        btn.setBackground(colorFondoOperadores);
+                        btn.setForeground(colorLetraOperadores);
+                    }
+
+                    JButton[] botonesSuperiores = { btnHistorial, btnEstilos };
+                    for (JButton btn : botonesSuperiores) {
+                        btn.setBackground(colorFondoBotonesSuperiores);
+                        btn.setForeground(colorLetraBotonesSuperiores);
+                    }
+                }
+            }
+        });
     }
     public static void main(String[] args)
     {
         JFrame frame = new JFrame("CalculadoraV1");
         frame.setContentPane(new CalculadoraV1().pnlCalculadora);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(350, 550);
+        frame.setSize(550, 550);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
