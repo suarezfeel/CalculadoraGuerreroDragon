@@ -1,4 +1,4 @@
-package calculadorav1;
+package calculadorav1.vista;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -123,7 +123,9 @@ public class CalculadoraV1
         JFrame frame = new JFrame("CalculadoraV1");
         frame.setContentPane(new CalculadoraV1().pnlCalculadora);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
+        frame.setSize(350, 550);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }
