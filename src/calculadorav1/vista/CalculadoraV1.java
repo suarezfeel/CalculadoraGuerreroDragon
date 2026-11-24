@@ -40,8 +40,8 @@ public class CalculadoraV1
     private JButton btnMasMenos;
     private JButton btnPorcentaje;
     private JButton btnComa;
-    private JButton btnCalculadora;
     private JButton btnHistorial;
+    private JButton btnHuevo;
     private JButton btnEstilos;
 
     private void createUIComponents()
@@ -67,10 +67,10 @@ public class CalculadoraV1
         btnMasMenos = new BotonRedondeado(25);
         btnPorcentaje = new BotonRedondeado(25);
         btnComa = new BotonRedondeado(25);
-        btnCalculadora = new BotonRedondeado(25);
+        btnHistorial = new BotonRedondeado(25);
 
         btnEstilos = new BotonRedondeado(25);
-        btnHistorial = new BotonRedondeado(25);
+        btnHuevo = new BotonRedondeado(25);
     }
 
     public class BotonRedondeado extends JButton
@@ -167,7 +167,7 @@ public class CalculadoraV1
                     JButton[] botonesNumeros = {
                             btnCero, btnUno, btnDos, btnTres, btnCuatro,
                             btnCinco, btnSeis, btnSiete, btnOcho, btnNueve,
-                            btnComa, btnCalculadora
+                            btnComa, btnHistorial
                     };
                     for (JButton btn : botonesNumeros) {
                         btn.setBackground(colorFondoNumerosBoton);
@@ -188,7 +188,7 @@ public class CalculadoraV1
                         btn.setForeground(colorLetraOperadores);
                     }
 
-                    JButton[] botonesSuperiores = { btnHistorial, btnEstilos };
+                    JButton[] botonesSuperiores = { btnHuevo, btnEstilos };
                     for (JButton btn : botonesSuperiores) {
                         btn.setBackground(colorFondoBotonesSuperiores);
                         btn.setForeground(colorLetraBotonesSuperiores);
@@ -222,7 +222,7 @@ public class CalculadoraV1
                     JButton[] botonesNumeros = {
                             btnCero, btnUno, btnDos, btnTres, btnCuatro,
                             btnCinco, btnSeis, btnSiete, btnOcho, btnNueve,
-                            btnComa, btnCalculadora
+                            btnComa, btnHistorial
                     };
                     for (JButton btn : botonesNumeros) {
                         btn.setBackground(colorFondoNumerosBoton);
@@ -243,7 +243,7 @@ public class CalculadoraV1
                         btn.setForeground(colorLetraOperadores);
                     }
 
-                    JButton[] botonesSuperiores = { btnHistorial, btnEstilos };
+                    JButton[] botonesSuperiores = {btnHuevo, btnEstilos };
                     for (JButton btn : botonesSuperiores) {
                         btn.setBackground(colorFondoBotonesSuperiores);
                         btn.setForeground(colorLetraBotonesSuperiores);

@@ -68,7 +68,7 @@
           <text value="4"/>
         </properties>
       </component>
-      <component id="fd3c7" class="javax.swing.JButton" binding="btnCalculadora" custom-create="true">
+      <component id="fd3c7" class="javax.swing.JButton" binding="btnHistorial" custom-create="true">
         <constraints>
           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -256,7 +256,7 @@
           <text value="✧"/>
         </properties>
       </component>
-      <component id="f2fdb" class="javax.swing.JButton" binding="btnHistorial" custom-create="true">
+      <component id="f2fdb" class="javax.swing.JButton" binding="btnHuevo" custom-create="true">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -264,7 +264,7 @@
           <background color="-13421773"/>
           <font name="Segoe UI" size="18"/>
           <foreground color="-16777216"/>
-          <text value="☰"/>
+          <text value="🥚"/>
         </properties>
       </component>
     </children>
