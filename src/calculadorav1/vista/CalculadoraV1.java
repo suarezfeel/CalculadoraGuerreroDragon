@@ -117,7 +117,11 @@ public class CalculadoraV1
             return forma.contains(x, y);
         }
     }
+    public CalculadoraV1(){
+        txtOperacion.setBorder(null);
 
+        // Listeners
+    }
     public static void main(String[] args)
     {
         JFrame frame = new JFrame("CalculadoraV1");
