@@ -2,4 +2,9 @@ package calculadorav1.modelo;
 
 public class Division extends OperacionMatematica
 {
+    @Override
+    public double ejecutar()
+    {
+        return 0;
+    }
 }
