@@ -44,6 +44,9 @@ public class CalculadoraV1
     private JButton btnHuevo;
     private JButton btnEstilos;
 
+    private double elPrimerNumero =0;
+    private String operacionRealizar = null;
+    private boolean limpiarNumeroSiguiente = false;
     private void createUIComponents()
     {
         btnCero = new BotonRedondeado(25);
@@ -251,6 +254,103 @@ public class CalculadoraV1
                 }
             }
         });
+        btnUno.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtOperacion.setText(txtOperacion.getText() + "1");
+            }
+        });
+        btnDos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtOperacion.setText((txtOperacion.getText() + "2"));
+            }
+        });
+        btnTres.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtOperacion.setText((txtOperacion.getText() + "3"));
+            }
+        });
+        btnCuatro.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtOperacion.setText(txtOperacion.getText() + "4");
+            }
+        });
+        btnCinco.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtOperacion.setText((txtOperacion.getText() + "5"));
+            }
+        });
+        btnSeis.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtOperacion.setText((txtOperacion.getText() + "6"));
+            }
+        });
+        btnSiete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtOperacion.setText(txtOperacion.getText() + "7");
+            }
+        });
+        btnOcho.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtOperacion.setText((txtOperacion.getText() + "8"));
+            }
+        });
+        btnNueve.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtOperacion.setText((txtOperacion.getText() + "9"));
+            }
+        });
+        btnCero.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtOperacion.setText((txtOperacion.getText() + "0"));
+            }
+        });
+        btnAC.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                elPrimerNumero=0;
+                operacionRealizar =null;
+                limpiarNumeroSiguiente= true;
+                txtOperacion.setText("");
+            }
+        });
+        btnSuma.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    elPrimerNumero= Double.parseDouble(txtOperacion.getText());
+                    operacionRealizar = "+";
+                    limpiarNumeroSiguiente = true;
+                }catch (NumberFormatException ex){
+                    txtOperacion.setText("Error papi");
+                    limpiarNumeroSiguiente = true;
+                }
+            }
+        });
+        btnResta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    elPrimerNumero= Double.parseDouble(txtOperacion.getText());
+                    operacionRealizar = "-";
+                    limpiarNumeroSiguiente = true;
+                }catch (NumberFormatException ex){
+                    txtOperacion.setText("Error papi");
+                    limpiarNumeroSiguiente = true;
+                }
+            }
+        });
+
+
     }
     public static void main(String[] args)
     {
