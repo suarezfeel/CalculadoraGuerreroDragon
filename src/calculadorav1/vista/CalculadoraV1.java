@@ -44,9 +44,8 @@ public class CalculadoraV1
     private JButton btnHuevo;
     private JButton btnEstilos;
 
-    private double elPrimerNumero =0;
-    private String operacionRealizar = null;
-    private boolean limpiarNumeroSiguiente = false;
+    public double resultado=0;
+    public String operacionRealizar = null;
     private void createUIComponents()
     {
         btnCero = new BotonRedondeado(25);
@@ -75,7 +74,6 @@ public class CalculadoraV1
         btnEstilos = new BotonRedondeado(25);
         btnHuevo = new BotonRedondeado(25);
     }
-
     public class BotonRedondeado extends JButton
     {
         private final int radio;
@@ -130,6 +128,15 @@ public class CalculadoraV1
             return forma.contains(x, y);
         }
     }
+    public void agregarOperacion(String operacion){
+        String textoActual = txtOperacion.getText();
+        if(textoActual.isEmpty() || textoActual.endsWith("+") || textoActual.endsWith("-") || textoActual.endsWith("/") || textoActual.endsWith("x") || textoActual.endsWith("%")){
+            JOptionPane.showMessageDialog(null,"colocaste un operador matematico sin haber puesto ningun numero, intenta nuevamente", "información", JOptionPane.WARNING_MESSAGE);
+        }
+        operacionRealizar = operacion;
+        txtOperacion.setText(textoActual + operacion);
+    }
+
     public CalculadoraV1(){
         txtOperacion.setBorder(null);
         txtOperacion.setEditable(false);
@@ -263,13 +270,13 @@ public class CalculadoraV1
         btnDos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                txtOperacion.setText((txtOperacion.getText() + "2"));
+                txtOperacion.setText(txtOperacion.getText() + "2");
             }
         });
         btnTres.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                txtOperacion.setText((txtOperacion.getText() + "3"));
+                txtOperacion.setText(txtOperacion.getText() + "3");
             }
         });
         btnCuatro.addActionListener(new ActionListener() {
@@ -281,13 +288,13 @@ public class CalculadoraV1
         btnCinco.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                txtOperacion.setText((txtOperacion.getText() + "5"));
+                txtOperacion.setText(txtOperacion.getText() + "5");
             }
         });
         btnSeis.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                txtOperacion.setText((txtOperacion.getText() + "6"));
+                txtOperacion.setText(txtOperacion.getText() + "6");
             }
         });
         btnSiete.addActionListener(new ActionListener() {
@@ -299,58 +306,111 @@ public class CalculadoraV1
         btnOcho.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                txtOperacion.setText((txtOperacion.getText() + "8"));
+                txtOperacion.setText(txtOperacion.getText() + "8");
             }
         });
         btnNueve.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                txtOperacion.setText((txtOperacion.getText() + "9"));
+                txtOperacion.setText(txtOperacion.getText() + "9");
             }
         });
         btnCero.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                txtOperacion.setText((txtOperacion.getText() + "0"));
+                txtOperacion.setText(txtOperacion.getText() + "0");
             }
         });
+
         btnAC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                elPrimerNumero=0;
                 operacionRealizar =null;
-                limpiarNumeroSiguiente= true;
                 txtOperacion.setText("");
             }
         });
         btnSuma.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
-                    elPrimerNumero= Double.parseDouble(txtOperacion.getText());
-                    operacionRealizar = "+";
-                    limpiarNumeroSiguiente = true;
-                }catch (NumberFormatException ex){
-                    txtOperacion.setText("Error papi");
-                    limpiarNumeroSiguiente = true;
-                }
+                agregarOperacion("+");
             }
         });
         btnResta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
-                    elPrimerNumero= Double.parseDouble(txtOperacion.getText());
-                    operacionRealizar = "-";
-                    limpiarNumeroSiguiente = true;
-                }catch (NumberFormatException ex){
-                    txtOperacion.setText("Error papi");
-                    limpiarNumeroSiguiente = true;
-                }
+                agregarOperacion("-");
+            }
+        });
+        btnMultiplicacion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                agregarOperacion("x");
+            }
+        });
+        btnDivision.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                agregarOperacion("/");
+            }
+        });
+        btnPorcentaje.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                agregarOperacion("%");
             }
         });
 
+        btnIgual.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String texto = txtOperacion.getText();
+                try{
+                    String[] separarOperacion = texto.split("(?=[+\\-x/%])|(?<=[+\\-x/%])");
+                    double total = Double.parseDouble(separarOperacion[0]);
 
+                    for(int i= 1; i<separarOperacion.length; i +=2){
+                        String operacion = separarOperacion[i];
+                        double numeroOperado = Double.parseDouble(separarOperacion[i+1]);
+
+                        switch (operacion){
+                            case "+":
+                                total += numeroOperado;
+                                break;
+                            case "-":
+                                total -= numeroOperado;
+                                break;
+                            case "x":
+                                total *= numeroOperado;
+                                break;
+                            case "/":
+                                try{
+                                    if(numeroOperado == 0){
+                                        throw new ArithmeticException();
+                                    }
+                                    total /= numeroOperado;
+                                }catch( ArithmeticException exception){
+                                    JOptionPane.showMessageDialog(null, "no puedes dividir entre cero", "error dividir", JOptionPane.ERROR_MESSAGE);
+                                }
+                                break;
+                            case "%":
+                                try{
+                                    if(numeroOperado == 0){
+                                        throw new ArithmeticException();
+                                    }
+                                    total %= numeroOperado;
+                                }catch( ArithmeticException exception){
+                                    JOptionPane.showMessageDialog(null, "no se puede calcular un residuo de cero", "error residuo", JOptionPane.ERROR_MESSAGE);
+                                }
+                                break;
+                        }
+                    }
+                    resultado = total;
+                    txtOperacion.setText(String.valueOf(total));
+                } catch(Exception exception){
+                        JOptionPane.showMessageDialog(null, "trataste de hacer una operacion sin usar ningun numero despues del operador matematico", "error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
     }
     public static void main(String[] args)
     {
