@@ -75,7 +75,7 @@ public class CalculadoraV1
         btnEstilos = new BotonRedondeado(25);
         btnHuevo = new BotonRedondeado(25);
     }
-    public class BotonRedondeado extends JButton
+    public static class BotonRedondeado extends JButton
     {
         private final int radio;
         private Shape forma;
@@ -132,7 +132,7 @@ public class CalculadoraV1
     public void agregarOperacion(String operacion){
         String textoActual = txtOperacion.getText();
         if(textoActual.isEmpty() || textoActual.endsWith("+") || textoActual.endsWith("-") || textoActual.endsWith("/") || textoActual.endsWith("x") || textoActual.endsWith("%")){
-            JOptionPane.showMessageDialog(null,"colocaste un operador matematico sin haber puesto ningun numero, intenta nuevamente", "información", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Colocaste un operador matematico sin haber puesto ningun numero, intenta nuevamente.", "Información", JOptionPane.WARNING_MESSAGE);
         }
         operacionRealizar = operacion;
         txtOperacion.setText(textoActual + operacion);
@@ -368,11 +368,11 @@ public class CalculadoraV1
             @Override
             public void actionPerformed(ActionEvent e) {
                 String texto = txtOperacion.getText();
-                try{
+                try {
                     String[] separarOperacion = texto.split("(?=[+\\-x/%])|(?<=[+\\-x/%])");
                     double total = Double.parseDouble(separarOperacion[0]);
 
-                    for(int i= 1; i<separarOperacion.length; i +=2){
+                    for(int i= 1; i < separarOperacion.length; i +=2){
                         String operacion = separarOperacion[i];
                         double numeroOperado = Double.parseDouble(separarOperacion[i+1]);
 
@@ -388,22 +388,22 @@ public class CalculadoraV1
                                 break;
                             case "/":
                                 try{
-                                    if(numeroOperado == 0){
+                                    if (numeroOperado == 0) {
                                         throw new ArithmeticException();
                                     }
                                     total /= numeroOperado;
                                 }catch( ArithmeticException exception){
-                                    JOptionPane.showMessageDialog(null, "no puedes dividir entre cero", "error dividir", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, "No puedes dividir entre cero.", "Error al dividir", JOptionPane.ERROR_MESSAGE);
                                 }
                                 break;
                             case "%":
                                 try{
-                                    if(numeroOperado == 0){
+                                    if (numeroOperado == 0) {
                                         throw new ArithmeticException();
                                     }
                                     total %= numeroOperado;
                                 }catch( ArithmeticException exception){
-                                    JOptionPane.showMessageDialog(null, "no se puede calcular un residuo de cero", "error residuo", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, "No se puede calcular un residuo de cero.", "Error de residuo", JOptionPane.ERROR_MESSAGE);
                                 }
                                 break;
                         }
@@ -411,7 +411,7 @@ public class CalculadoraV1
                     resultado = total;
                     txtOperacion.setText(String.valueOf(total));
                 } catch(Exception exception){
-                        JOptionPane.showMessageDialog(null, "trataste de hacer una operacion sin usar ningun numero despues del operador matematico", "error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Trataste de hacer una operacion sin usar ningun numero despues del operador matematico", "error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -424,7 +424,7 @@ public class CalculadoraV1
 
                 // 2. Crear easter con ese mismo tamaño fijo
                 JFrame frameEaster = new JFrame("Easter");
-                frameEaster.setContentPane(new easter().panel1);
+                frameEaster.setContentPane(new easter().pnlEaster);
                 frameEaster.setSize(tamanoCalculadora); // Mismo ancho y alto que la calculadora
                 frameEaster.setResizable(false);         // Impide que el usuario estire la ventana
                 frameEaster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

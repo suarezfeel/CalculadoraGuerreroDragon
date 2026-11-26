@@ -6,15 +6,19 @@ import java.awt.event.ActionListener;
 import java.awt.Dimension;
 
 public class easter {
-    public JPanel panel1;
+    public JPanel pnlEaster;
     private JButton btnRegresar;
     private JLabel txtEasterEgg;
-
+    private void createUIComponents()
+    {
+        btnRegresar = new CalculadoraV1.BotonRedondeado(25);
+        txtEasterEgg = new JLabel();
+    }
     public easter() {
         btnRegresar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frameActual = (JFrame) SwingUtilities.getWindowAncestor(panel1);
+                JFrame frameActual = (JFrame) SwingUtilities.getWindowAncestor(pnlEaster);
                 Dimension tamanoActual = frameActual.getSize();
                 frameActual.dispose();
 
