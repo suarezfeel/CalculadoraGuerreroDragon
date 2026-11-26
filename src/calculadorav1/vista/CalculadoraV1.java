@@ -322,7 +322,10 @@ public class CalculadoraV1
                 txtOperacion.setText(txtOperacion.getText() + "0");
             }
         });
-
+        btnComa.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {txtOperacion.setText(txtOperacion.getText() + ".");}
+        });
         btnAC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
