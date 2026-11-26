@@ -7,11 +7,12 @@ import java.awt.geom.Ellipse2D;
 import java.awt.Color;
 public class CalculadoraV1
 {
+
     // Boolean modo claro/oscuro
     private boolean modoOscuro = false;
 
     // Panel
-    private JPanel pnlCalculadora;
+    public JPanel pnlCalculadora;
 
     // Campo de texto
     private JTextField txtOperacion;
@@ -409,6 +410,23 @@ public class CalculadoraV1
                 } catch(Exception exception){
                         JOptionPane.showMessageDialog(null, "trataste de hacer una operacion sin usar ningun numero despues del operador matematico", "error", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
+        btnHuevo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frameActual = (JFrame) SwingUtilities.getWindowAncestor(pnlCalculadora);
+                Dimension tamanoCalculadora = frameActual.getSize();
+                frameActual.dispose();
+
+                // 2. Crear easter con ese mismo tamaño fijo
+                JFrame frameEaster = new JFrame("Easter");
+                frameEaster.setContentPane(new easter().panel1);
+                frameEaster.setSize(tamanoCalculadora); // Mismo ancho y alto que la calculadora
+                frameEaster.setResizable(false);         // Impide que el usuario estire la ventana
+                frameEaster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frameEaster.setLocationRelativeTo(null);
+                frameEaster.setVisible(true);
             }
         });
     }
