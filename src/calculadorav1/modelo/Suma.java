@@ -7,4 +7,9 @@ public class Suma extends OperacionMatematica
     {
         return 0;
     }
+
+    @Override
+    public void registrarOperacion(){
+        return;
+    }
 }

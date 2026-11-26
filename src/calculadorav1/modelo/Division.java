@@ -7,4 +7,8 @@ public class Division extends OperacionMatematica
     {
         return 0;
     }
+    @Override
+    public void registrarOperacion() {
+        return;
+    }
 }

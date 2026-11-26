@@ -5,4 +5,5 @@ public abstract class OperacionMatematica
     private double a;
     private double b;
     public abstract double ejecutar();
+    public abstract void registrarOperacion();
 }

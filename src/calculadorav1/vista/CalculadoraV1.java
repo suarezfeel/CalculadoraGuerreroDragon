@@ -1,4 +1,6 @@
 package calculadorav1.vista;
+import calculadorav1.modelo.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -377,34 +379,20 @@ public class CalculadoraV1
                         double numeroOperado = Double.parseDouble(separarOperacion[i+1]);
 
                         switch (operacion){
-                            case "+":
-                                total += numeroOperado;
-                                break;
-                            case "-":
-                                total -= numeroOperado;
-                                break;
                             case "x":
-                                total *= numeroOperado;
+                                Multiplicacion multiplicacion = new Multiplicacion();
                                 break;
                             case "/":
-                                try{
-                                    if (numeroOperado == 0) {
-                                        throw new ArithmeticException();
-                                    }
-                                    total /= numeroOperado;
-                                }catch( ArithmeticException exception){
-                                    JOptionPane.showMessageDialog(null, "No puedes dividir entre cero.", "Error al dividir", JOptionPane.ERROR_MESSAGE);
-                                }
+                                Division division = new Division();
                                 break;
                             case "%":
-                                try{
-                                    if (numeroOperado == 0) {
-                                        throw new ArithmeticException();
-                                    }
-                                    total %= numeroOperado;
-                                }catch( ArithmeticException exception){
-                                    JOptionPane.showMessageDialog(null, "No se puede calcular un residuo de cero.", "Error de residuo", JOptionPane.ERROR_MESSAGE);
-                                }
+                                Residuo residuo = new Residuo();
+                                break;
+                            case "+":
+                                Suma suma = new Suma();
+                                break;
+                            case "-":
+                                Resta resta = new Resta();
                                 break;
                         }
                     }
