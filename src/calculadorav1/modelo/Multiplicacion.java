@@ -5,11 +5,13 @@ public class Multiplicacion extends OperacionMatematica
     @Override
     public double ejecutar()
     {
-        return 0;
+        return numeroOperadoA * numeroOperadoB;
     }
-
     @Override
     public void registrarOperacion() {
         return;
+    }
+    public Multiplicacion(double numeroOperadoA, double numeroOperadoB){
+        super(numeroOperadoA, numeroOperadoB);
     }
 }

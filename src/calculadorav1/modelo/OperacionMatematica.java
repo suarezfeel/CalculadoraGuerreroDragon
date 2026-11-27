@@ -2,8 +2,14 @@ package calculadorav1.modelo;
 
 public abstract class OperacionMatematica
 {
-    private double a;
-    private double b;
+    protected double numeroOperadoA;
+    protected double numeroOperadoB;
     public abstract double ejecutar();
     public abstract void registrarOperacion();
+
+    public OperacionMatematica(double numeroOperadoA, double numeroOperadoB)
+    {
+        this.numeroOperadoA = numeroOperadoA;
+        this.numeroOperadoB = numeroOperadoB;
+    }
 }

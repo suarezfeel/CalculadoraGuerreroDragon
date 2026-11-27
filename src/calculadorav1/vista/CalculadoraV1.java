@@ -6,15 +6,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
-import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class CalculadoraV1
 {
 
     // Boolean modo claro/oscuro
-    private boolean modoOscuro = false;
+    private boolean modoOscuro = true;
 
     // Panel
-    public JPanel pnlCalculadora;
+    private JPanel pnlCalculadora;
 
     // Campo de texto
     private JTextField txtOperacion;
@@ -46,9 +48,13 @@ public class CalculadoraV1
     private JButton btnHistorial;
     private JButton btnHuevo;
     private JButton btnEstilos;
+    private JLabel lblFechaHora;
 
-    public double resultado=0;
-    public String operacionRealizar = null;
+    // Getter del panel (Encapsulación)
+    public JPanel getPnlCalculadora(){
+        return pnlCalculadora;
+    }
+
     private void createUIComponents()
     {
         btnCero = new BotonRedondeado(25);
@@ -79,12 +85,10 @@ public class CalculadoraV1
     }
     public static class BotonRedondeado extends JButton
     {
-        private final int radio;
         private Shape forma;
-
+        private int radio;
         public BotonRedondeado()
         {
-            this(25); // Radio por defecto para el diseñador visual
         }
 
         public BotonRedondeado(int radio)
@@ -131,19 +135,38 @@ public class CalculadoraV1
             return forma.contains(x, y);
         }
     }
-    public void agregarOperacion(String operacion){
-        String textoActual = txtOperacion.getText();
-        if(textoActual.isEmpty() || textoActual.endsWith("+") || textoActual.endsWith("-") || textoActual.endsWith("/") || textoActual.endsWith("x") || textoActual.endsWith("%")){
-            JOptionPane.showMessageDialog(null,"Colocaste un operador matematico sin haber puesto ningun numero, intenta nuevamente.", "Información", JOptionPane.WARNING_MESSAGE);
+    public void agregarOperacion(String operacion) {
+        try {
+            String textoActual = txtOperacion.getText();
+            if (textoActual.isEmpty() || textoActual.endsWith("+") || textoActual.endsWith("-")
+                    || textoActual.endsWith("/") || textoActual.endsWith("x")
+                    || textoActual.endsWith("%") || textoActual.endsWith(".")) {
+                throw new NumberFormatException("Operador sin operando válido.");
+            }
+            txtOperacion.setText(textoActual + operacion);
+        } catch (NumberFormatException exception) {
+            // Excepción que controla el intento de ingresar operadores consecutivos o al inicio sin número.
+            JOptionPane.showMessageDialog(pnlCalculadora,
+                    "Colocaste un operador matemático sin haber puesto un número válido.",
+                    "Información", JOptionPane.WARNING_MESSAGE);
         }
-        operacionRealizar = operacion;
-        txtOperacion.setText(textoActual + operacion);
     }
 
     public CalculadoraV1(){
         txtOperacion.setBorder(null);
         txtOperacion.setEditable(false);
         txtOperacion.setFocusable(false);
+        // Label de fecha y hora
+        java.time.format.DateTimeFormatter formato = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        lblFechaHora.setText(java.time.LocalDateTime.now().format(formato));
+
+        Timer reloj = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                lblFechaHora.setText(java.time.LocalDateTime.now().format(formato));
+            }
+        });
+        reloj.start();
         // Listeners
 
         btnEstilos.addActionListener(new ActionListener()
@@ -152,7 +175,7 @@ public class CalculadoraV1
             public void actionPerformed(ActionEvent e)
             {
                 modoOscuro = !modoOscuro;
-                if  (modoOscuro) {
+                if  (!modoOscuro) {
                     // Definición de colores Modo Claro
                     Color colorFondoPanel = new Color(242, 242, 247);
 
@@ -171,6 +194,7 @@ public class CalculadoraV1
                     Color colorFondoBotonesSuperiores = new Color(44,44,46);
                     Color colorLetraBotonesSuperiores = new Color(254,254,254);
 
+                    Color colorLetraFecha = new Color(110, 110, 115);
                     // Asignación de colores
                     pnlCalculadora.setBackground(colorFondoPanel);
 
@@ -206,6 +230,8 @@ public class CalculadoraV1
                         btn.setBackground(colorFondoBotonesSuperiores);
                         btn.setForeground(colorLetraBotonesSuperiores);
                     }
+
+                    lblFechaHora.setForeground(colorLetraFecha);
                 }
                 else {
                     // Definición de colores Modo Oscuro
@@ -224,8 +250,9 @@ public class CalculadoraV1
                     Color colorLetraOperadores = new Color(255, 255, 255);
 
                     Color colorFondoBotonesSuperiores = new Color(51, 51, 51);
-                    Color colorLetraBotonesSuperiores = new Color(0, 0, 0);
+                    Color colorLetraBotonesSuperiores = new Color(254, 254, 254);
 
+                    Color colorLetraFecha = new Color(142, 142, 147);
                     // Asignación de colores
                     pnlCalculadora.setBackground(colorFondoPanel);
 
@@ -261,6 +288,8 @@ public class CalculadoraV1
                         btn.setBackground(colorFondoBotonesSuperiores);
                         btn.setForeground(colorLetraBotonesSuperiores);
                     }
+
+                    lblFechaHora.setForeground(colorLetraFecha);
                 }
             }
         });
@@ -326,12 +355,26 @@ public class CalculadoraV1
         });
         btnComa.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {txtOperacion.setText(txtOperacion.getText() + ".");}
+            public void actionPerformed(ActionEvent e) {
+                String texto = txtOperacion.getText();
+                String[] partes = texto.split("[+\\-x/%]");
+                String ultimoNumero = "";
+                if (partes.length > 0) {
+                    ultimoNumero = partes[partes.length - 1];
+                }
+                if (!ultimoNumero.contains(".")) {
+                    if (ultimoNumero.isEmpty()) {
+                        txtOperacion.setText(texto + "0.");
+                    }
+                    else {
+                        txtOperacion.setText(texto + ".");
+                    }
+                }
+            }
         });
         btnAC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                operacionRealizar =null;
                 txtOperacion.setText("");
             }
         });
@@ -370,36 +413,76 @@ public class CalculadoraV1
             @Override
             public void actionPerformed(ActionEvent e) {
                 String texto = txtOperacion.getText();
+                if (texto.isEmpty()) return;
+
                 try {
-                    String[] separarOperacion = texto.split("(?=[+\\-x/%])|(?<=[+\\-x/%])");
-                    double total = Double.parseDouble(separarOperacion[0]);
+                    // Separa números y operadores manteniendo el signo negativo unido al número
+                    String[] separarOperacion = texto.split("(?<=[0-9])(?=[+\\-x/%])|(?<=[0-9][+\\-x/%])");
+                    ArrayList<String> partes = new ArrayList<>(Arrays.asList(separarOperacion));
 
-                    for(int i= 1; i < separarOperacion.length; i +=2){
-                        String operacion = separarOperacion[i];
-                        double numeroOperado = Double.parseDouble(separarOperacion[i+1]);
+                    // 1. Primera pasada: Multiplicación, División y Residuo (mayor jerarquía)
+                    for (int i = 1; i < partes.size(); i += 2) {
+                        String operacion = partes.get(i);
+                        if (operacion.equals("x") || operacion.equals("/") || operacion.equals("%")) {
+                            double numeroA = Double.parseDouble(partes.get(i - 1));
+                            double numeroB = Double.parseDouble(partes.get(i + 1));
+                            OperacionMatematica op = null;
 
-                        switch (operacion){
-                            case "x":
-                                Multiplicacion multiplicacion = new Multiplicacion();
-                                break;
-                            case "/":
-                                Division division = new Division();
-                                break;
-                            case "%":
-                                Residuo residuo = new Residuo();
-                                break;
-                            case "+":
-                                Suma suma = new Suma();
-                                break;
-                            case "-":
-                                Resta resta = new Resta();
-                                break;
+                            switch (operacion) {
+                                case "x":
+                                    op = new Multiplicacion(numeroA, numeroB); break;
+                                case "/":
+                                    op = new Division(numeroA, numeroB);       break;
+                                case "%":
+                                    op = new Residuo(numeroA, numeroB);        break;
+                            }
+
+                            // Reemplaza "numeroA", "operador", "numeroB" por el resultado
+                            partes.set(i - 1, String.valueOf(op.ejecutar()));
+                            partes.remove(i);
+                            partes.remove(i);
+                            i -= 2; // Retrocede el índice porque la lista se encogió
                         }
                     }
-                    resultado = total;
-                    txtOperacion.setText(String.valueOf(total));
-                } catch(Exception exception){
-                        JOptionPane.showMessageDialog(null, "Trataste de hacer una operacion sin usar ningun numero despues del operador matematico", "error", JOptionPane.ERROR_MESSAGE);
+
+                    // 2. Segunda pasada: Suma y Resta (menor jerarquía)
+                    double total = Double.parseDouble(partes.get(0));
+                    for (int i = 1; i < partes.size(); i += 2) {
+                        String operacion = partes.get(i);
+                        double numeroB = Double.parseDouble(partes.get(i + 1));
+                        OperacionMatematica op = null;
+
+                        switch (operacion) {
+                            case "+":
+                                op = new Suma(total, numeroB);  break;
+                            case "-":
+                                op = new Resta(total, numeroB); break;
+                        }
+
+                        if (op != null) {
+                            total = op.ejecutar();
+                        }
+                    }
+
+                    // Evita mostrar ".0" si el resultado es entero
+                    String resultadoFinal;
+                    if (total % 1 == 0) {
+                        resultadoFinal = String.valueOf((long) total);
+                    }
+                    else {
+                        resultadoFinal = String.valueOf(total);
+                    }
+                    txtOperacion.setText(resultadoFinal);
+
+                } catch (ArithmeticException exception) { // Excepción de división o residuo entre 0.
+                    JOptionPane.showMessageDialog(pnlCalculadora, "Error! " + exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    txtOperacion.setText("");
+                } catch (IndexOutOfBoundsException exception) { // Excepción que sale al no completar una operación.
+                    JOptionPane.showMessageDialog(pnlCalculadora, "Error! Expresión incompleta.", "Error", JOptionPane.ERROR_MESSAGE);
+                    txtOperacion.setText("");
+                } catch (NumberFormatException exception) { // Excepción encargada de verificar que lo ingresado sea una expresión completa
+                    JOptionPane.showMessageDialog(pnlCalculadora, "Error! Expresión inválida.", "Error", JOptionPane.ERROR_MESSAGE);
+                    txtOperacion.setText("");
                 }
             }
         });
@@ -420,11 +503,31 @@ public class CalculadoraV1
                 frameEaster.setVisible(true);
             }
         });
+        btnMasMenos.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+
+                String texto = txtOperacion.getText();
+
+                // Si el último número ya es negativo, marca su signo con '#'
+                texto = texto.replaceFirst("(^|.*[+\\-x/%])-([0-9.]+)$", "$1#$2");
+
+                // Si el último número es positivo, le antepone '-'
+                texto = texto.replaceFirst("(^|.*[+\\-x/%])([0-9.]+)$", "$1-$2");
+
+                // Elimina la marca temporal '#' dejando el número positivo
+                texto = texto.replace("#", "");
+
+                txtOperacion.setText(texto);
+            }
+        });
     }
     public static void main(String[] args)
     {
         JFrame frame = new JFrame("CalculadoraV1");
-        frame.setContentPane(new CalculadoraV1().pnlCalculadora);
+        frame.setContentPane(new CalculadoraV1().getPnlCalculadora());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(550, 550);
         frame.setResizable(false);

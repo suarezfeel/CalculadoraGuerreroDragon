@@ -23,7 +23,7 @@ public class easter {
                 frameActual.dispose();
 
                 JFrame frameCalc = new JFrame("Calculadora");
-                frameCalc.setContentPane(new CalculadoraV1().pnlCalculadora);
+                frameCalc.setContentPane(new CalculadoraV1().getPnlCalculadora());
                 frameCalc.setSize(tamanoActual);
                 frameCalc.setResizable(false);
                 frameCalc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -2,10 +2,14 @@ package calculadorav1.modelo;
 
 public class Resta extends OperacionMatematica
 {
+    public Resta(double numeroOperadoA, double numeroOperadoB)
+    {
+        super(numeroOperadoA, numeroOperadoB);
+    }
     @Override
     public double ejecutar()
     {
-        return 0;
+        return numeroOperadoA - numeroOperadoB;
     }
 
     @Override
